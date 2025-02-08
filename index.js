@@ -1,6 +1,6 @@
 // Check in which mode is being executed
 let ARGS, IS_DEV, IS_PROD, IS_DEBUG, SAVE, MODE, DEV, PROD, DEBUG, MIGRATE;
-export { IS_DEV, IS_PROD, IS_DEBUG, SAVE };
+export { IS_DEV, IS_PROD, IS_DEBUG, SAVE , MIGRATE, MODE, DEV, PROD, DEBUG };
 
 // Check which mode is being executed
 function checkMode() {
