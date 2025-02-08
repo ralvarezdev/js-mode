@@ -1,24 +1,31 @@
 // Check in which mode is being executed
-export const ARGS =process.argv.slice(2)
-export const IS_DEV = ARGS.includes('--dev')
-export const IS_PROD = ARGS.includes('--prod')
-export const IS_DEBUG = ARGS.includes('--debug')
-export const SAVE = ARGS.includes('--save')
+let ARGS, IS_DEV, IS_PROD, IS_DEBUG, SAVE, MODE, DEV, PROD, DEBUG;
+export { IS_DEV, IS_PROD, IS_DEBUG, SAVE };
 
-// Mode keys
-export const DEV= "dev"
-export const PROD ="prod"
-export const DEBUG ="debug"
-export let mode
+// Check which mode is being executed
+function checkMode() {
+    if ([IS_DEV, IS_PROD, IS_DEBUG].filter(cond=>cond).length>1)
+        throw new Error('Multiple modes set')
+    if (IS_DEV)
+        MODE=DEV
+    else if (IS_PROD)
+        MODE=PROD
+    else if (IS_DEBUG)
+        MODE=DEBUG
+}
 
-// Check if there are multiple modes set
-if ([IS_DEV, IS_PROD, IS_DEBUG].filter(cond=>cond).length>1)
-    throw new Error('Multiple modes set')
+// Load the node environment
+export function loadNode() {
+    ARGS = process.argv.slice(2)
+    IS_DEV = ARGS.includes('--dev')
+    IS_PROD = ARGS.includes('--prod')
+    IS_DEBUG = ARGS.includes('--debug')
+    SAVE = ARGS.includes('--save')
+}
 
-// Set the mode according to the running environment
-if (IS_DEV)
-    mode=DEV
-else if (IS_PROD)
-    mode=PROD
-else if (IS_DEBUG)
-    mode=DEBUG
+// Load Vite environment.
+export function loadVite() {
+    IS_DEV = import.meta.env.MODE==='dev'
+    IS_PROD = import.meta.env.MODE==='prod'
+    IS_DEBUG = import.meta.env.MODE==='debug'
+}
